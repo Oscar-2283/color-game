@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: #f06060;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .bigBox{
+            width: 800px;
+            height: 800px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; 
+        }
+
+        .box{
+            width: 50%;
+            height: 50%;
+            background-color: green;
+            border: 5px white solid ;
+            border-radius: 20px;
+        }
+
+        .color{
+            background-color: rgb(239, 145, 23);
+        }
+
+        .score{
+            font-size: 50px;
+            height: 50px;
+            margin: 0;
+            padding: 0;
+            font-size: 2em;
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-weight: bold;
+        }
+        .difBox{
+            position: absolute;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+        }
+        .diffculty{
+            font-size: 40px;
+            font-weight: bold;
+            background-color: wheat;
+            border-radius: 20px;
+            /* padding: 1rem; */
+            margin: 1rem;
+            display: flex;
+        }
+        .diffculty:hover{
+            background-color: burlywood;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+            padding: 1rem;
+        }
+        .easy{
+            /* background-color: rgb(239, 145, 23); */
+        }
+        
+        .answer{
+            display: flex;
+            font-size: 1.5rem ;
+            font-weight: bold;
+            background-color: wheat;
+            border-radius: 20px;
+            position: absolute;
+            /* margin: 1rem; */
+            top: 4%;
+            left: 80%;
+            /* transform: translate(-50%,0); */
+            z-index: 10;
+            
+        }
+
+        .border{
+            border: 10px dashed #000;
+        }
+        #progressBar{
+            height:50px;
+            width: 200px;
+            position: absolute;
+            left: 10%;
+            top: 5%;
+        }
+        .play{
+            font-size: 1.5rem;
+            width: 100%;
+            display: flex;
+            margin: 20px auto;
+            align-items: center;
+            position:absolute;
+            top: 3%;
+            /* left: 25%; */
+        }
+
+        .stop{
+            margin-right: 10px;
+            margin-left: 20px;
+        }
+        .none{
+            display: none;
+        }
+        button{
+            border-radius: 10px;
+            padding: 0.5rem ;
+            font-size: 1.5rem;
+        }
+        button:hover{
+            
+            opacity: .8;
+        }
+        @media (max-width:1300px){
+            .difBox{
+                flex-direction: row;
+                /* top: 10%; */
+                left: 50%;
+                top: 85%;
+                transform: translate(-50%,0);
+            }
+            .diffculty{
+                padding: 15px;
+                font-size: 30px;
+                
+            }
+            a{
+                padding: 0.5rem;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <section class="homepage">
+        <div>
+            <h1識>彩色別度測試</h1識>
+            <div>在60秒內,<br>找到不同的顏色</div>
+        </div>
+        <!-- <div class="difBox">
+            <div class="diffculty easy color"><a href="#">簡單</a></div>
+            <div class="diffculty normal"><a href="#">普通</a></div>
+            <div class="diffculty hard"><a href="#">困難</a></div>
+        </div> -->
+        <button class="start">開始</button>
+        <button class="continue none">繼續</button>
+    </section>
+
+    <section class="play none ">
+        
+        <button class="stop">停止</button>
+        <div class="time"></div>
+        <div class="answer"><a href="#">提示</a></div>
+    </section>
+
+    <script>
+        let n =1
+//////////////
+
+        function init(){
+            n=1;
+            x=0;
+            timeleft = 60;
+        }
+
+        
+
+///////////////////////
+
+        let bigBox = document.createElement('div');
+            bigBox.className='bigBox none';
+            document.body.appendChild(bigBox);
+        
+            let score = document.createElement('div');
+            score.className = 'score none';
+            score.innerHTML = "第"+ n +"關" ;
+            document.body.appendChild(score);
+
+
+
+//////////////////////////////////////////
+
+            const homepage =document.querySelector('.homepage');
+            // const difBox = document.querySelector(".difBox");
+            const play = document.querySelector(".play")
+
+            let start_btn = document.querySelector('.start');
+            let stop_btn = document.querySelector('.stop');
+            let continue_btn = document.querySelector('.continue');
+            let timeCount = document.querySelector('.time');
+            const timeX = 60;
+            let timer;
+            function countDown(){
+            
+                clearInterval(timer)
+                timer = setInterval(function(){
+                    if(time == 0){
+                    // init();
+                    // parent.location.reload();
+                    homepage.classList.remove('none')
+                    // difBox.classList.add('none');
+                    // answer.classList.add('none');
+                    play.classList.add('none');
+                    bigBox.classList.add('none');
+                    stop_btn.classList.add('none')
+                    continue_btn.classList.add('none');
+                    start_btn.classList.remove('none');
+                    start_btn.innerHTML = "在玩一次"
+                    }else{
+                        time--;
+                        timeCount.innerHTML = time + "S"
+                    }
+                },1000)
+            }
+
+            start_btn.addEventListener('click',function(){
+                countDown();
+                homepage.classList.add('none');
+                bigBox.classList.remove('none');
+                // difBox.classList.add('none');
+                // answer.classList.remove('none');
+                play.classList.remove('none');
+                start_btn.classList.add('none');
+                stop_btn.classList.remove('none')
+                score.classList.remove('none');
+                start_btn.innerHTML = "重玩遊戲"
+                time = timeX
+                // timeCount.innerHTML = time + "S"
+                colorgame();
+            });
+            stop_btn.addEventListener('click',function(){
+                clearInterval(timer);
+                bigBox.classList.add('none');
+                // difBox.classList.remove('none');
+                // answer.classList.add('none');
+                play.classList.add('none');  ////time
+                homepage.classList.remove('none');
+                score.classList.add('none');
+                start_btn.classList.remove('none');
+                continue_btn.classList.remove('none');
+
+            });
+            continue_btn.addEventListener('click',function(){
+                countDown();
+                bigBox.classList.remove('none');
+                // answer.classList.remove('none')
+                // difBox.classList.add('none');//time
+                homepage.classList.add('none')
+                play.classList.remove('none');
+                score.classList.remove('none');
+                
+            })
+
+//////////////////////////////////////
+            const diffculty = document.querySelectorAll = ('.diffculty');
+            function dif(){
+                diffculty.forEach(addEventListener('click',function(){
+                    diffculty.classList.add('color')
+                }))
+            }
+                
+            
+        
+        // let boxAll = document.querySelector('.boxes');
+        function colorgame(){
+
+            score.innerHTML = "第 "+n+" 關" ;
+            bigBox.innerHTML ="";
+            let r = Math.floor(Math.random()*256);
+            let g = Math.floor(Math.random()*256);
+            let b = Math.floor(Math.random()*256);
+            // boxAll.innerHTML ='';
+            level = 2 + x;
+            
+            let size = (100/level);
+            if (level < 10){
+                for (let i=0; i < level**2; i++){
+                    bigBox.innerHTML += (`<div class="box"  style= " width:${size}%; height:${size}%; background-color: rgb(${r},${g},${b});"></div>`);
+                } 
+            }else{
+                for(let p = 0; p<100 ;p++){
+                    bigBox.innerHTML += (`<div class="box"  style= " width:${10}%; height:${10}%; background-color: rgb(${r},${g},${b});"></div>`);
+                }
+            }
+            
+            let randomBox 
+            
+            if (level <=10){
+                randomBox = Math.floor(Math.random()*level**2);
+            }else{
+                randomBox = Math.floor(Math.random()*100);
+            }
+            
+
+            let boxSmall = document.querySelector(`.bigBox .box:nth-child(${randomBox+1})`);
+            console.log(randomBox);
+            console.log(boxSmall);
+
+            boxSmall.classList.add('answer-box')
+            
+            let answerBox= document.querySelector('.answer-box');
+
+            answerBox.style.opacity = `${0.5+level*0.01}`;
+
+
+            // let answer = document.createElement('div');
+            // answer.className='answer ';
+            // document.body.appendChild(answer);
+            // answer.innerHTML =(`<a href="#">答案</a>`)
+
+
+            let answer = document.querySelector('.answer')
+            answer.addEventListener('click',function(){
+                answerBox.style.opacity=0.2
+                answerBox.classList.add('border')
+            });
+
+            answerBox.addEventListener('click',function(){
+            if(n%2 ==0){
+                x++; 
+            }
+            n++;           
+            
+            colorgame()
+        })
+        
+
+        }
+        let x = 0;
+        // colorgame()
+        
+
+        
+        
+
+    </script>
+</body>
+</html>
