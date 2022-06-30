@@ -240,15 +240,14 @@
                 countDown();
                 homepage.classList.add('none');
                 bigBox.classList.remove('none');
-                // difBox.classList.add('none');
-                // answer.classList.remove('none');
                 play.classList.remove('none');
                 start_btn.classList.add('none');
                 stop_btn.classList.remove('none')
                 score.classList.remove('none');
                 start_btn.innerHTML = "重玩遊戲"
                 time = timeX
-                // timeCount.innerHTML = time + "S"
+                x = 0;
+                n = 1;
                 colorgame();
             });
             stop_btn.addEventListener('click',function(){
@@ -275,12 +274,12 @@
             })
 
 //////////////////////////////////////
-            const diffculty = document.querySelectorAll = ('.diffculty');
-            function dif(){
-                diffculty.forEach(addEventListener('click',function(){
-                    diffculty.classList.add('color')
-                }))
-            }
+            // const diffculty = document.querySelectorAll = ('.diffculty');
+            // function dif(){
+            //     diffculty.forEach(addEventListener('click',function(){
+            //         diffculty.classList.add('color')
+            //     }))
+            // }
                 
             
         
